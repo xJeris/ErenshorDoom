@@ -22,7 +22,9 @@ Thumbs.db
 CLAUDE.md
 reference/
 
-# WAD files (copyrighted game data)
+# WAD files (copyrighted game data) — except the WAD/ distribution folder
 *.WAD
 *.wad
+!WAD/*.WAD
+!WAD/*.wad
 *.sf2
