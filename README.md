@@ -18,7 +18,7 @@ Built on [Managed Doom](https://github.com/sinshu/managed-doom) by sinshu — a 
 1. Install [BepInEx 5.4.x](https://github.com/BepInEx/BepInEx/releases) into your Erenshor game directory
 2. Download the latest release zip
 3. Extract the `ErenshorDoom/` folder into `<Erenshor>/BepInEx/plugins/`
-4. Place a Doom WAD file (`DOOM1.WAD`, `DOOM.WAD`, or `DOOM2.WAD`) in the `ErenshorDoom/` plugin folder
+4. Add a Doom WAD file to the `ErenshorDoom/` plugin folder (see [WAD Files](#wad-files) below)
 5. Launch Erenshor
 
 Your plugin folder should look like:
@@ -28,7 +28,7 @@ BepInEx/plugins/ErenshorDoom/
     System.Memory.dll
     System.Buffers.dll
     System.Runtime.CompilerServices.Unsafe.dll
-    DOOM1.WAD          <-- you provide this
+    DOOM1.WAD
 ```
 
 ## Usage
@@ -83,14 +83,18 @@ The build auto-detects common Steam install paths if neither is set.
 
 ## WAD Files
 
-You need a Doom WAD file to play. Supported WADs:
+You need a Doom WAD file to play. A free shareware copy of `DOOM1.WAD` is included in the [`WAD/`](WAD/) folder of this repository — just download it and place it in your plugin folder.
 
-- `DOOM1.WAD` — Shareware (Episode 1 only, freely distributable)
-- `DOOM.WAD` — Registered/Ultimate Doom (all episodes)
-- `DOOM2.WAD` — Doom II
-- `FREEDOOM1.WAD` / `FREEDOOM2.WAD` — Free open-source alternatives from [Freedoom](https://freedoom.github.io/)
+You can also supply your own WAD file if you own a copy of Doom. Supported WADs:
 
-WAD files are copyrighted game data and are not included in this repository.
+| WAD | Contents | How to get it |
+|-----|----------|---------------|
+| `DOOM1.WAD` | Shareware — Episode 1: Knee-Deep in the Dead | Included in [`WAD/`](WAD/) folder |
+| `DOOM.WAD` | Ultimate Doom — all 4 episodes | [Steam](https://store.steampowered.com/app/2280/Ultimate_Doom/), [GOG](https://www.gog.com/game/the_ultimate_doom) |
+| `DOOM2.WAD` | Doom II: Hell on Earth | [Steam](https://store.steampowered.com/app/2300/Doom_II/), [GOG](https://www.gog.com/game/doom_ii_final_doom) |
+| `FREEDOOM1.WAD` / `FREEDOOM2.WAD` | Free open-source replacements | [Freedoom](https://freedoom.github.io/) |
+
+Place whichever WAD you want to use in your plugin folder and set the `WadFileName` config option if it's not `DOOM1.WAD`.
 
 ## License
 
