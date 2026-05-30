@@ -1,0 +1,28 @@
+# Build output
+bin/
+obj/
+release/
+verify_zip/
+
+# IDE
+.vs/
+.idea/
+*.user
+*.suo
+*.userprefs
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Release artifacts
+*.zip
+
+# Project guidance (not for distribution)
+CLAUDE.md
+reference/
+
+# WAD files (copyrighted game data)
+*.WAD
+*.wad
+*.sf2

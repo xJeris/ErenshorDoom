@@ -1,0 +1,92 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <AssemblyName>ErenshorDoom</AssemblyName>
+    <Version>0.1.0</Version>
+    <LangVersion>9.0</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Deterministic>false</Deterministic>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Set this to your Erenshor install directory, e.g.: -->
+    <!-- dotnet build -p:ErenshorDir="C:\Program Files (x86)\Steam\steamapps\common\Erenshor" -->
+    <!-- Auto-detection: checks ERENSHOR_DIR env var, then Playtest, then release -->
+    <ErenshorDir Condition="'$(ErenshorDir)' == ''">$(ERENSHOR_DIR)</ErenshorDir>
+    <ErenshorDir Condition="'$(ErenshorDir)' == '' AND Exists('C:\Program Files (x86)\Steam\steamapps\common\Erenshor Playtest\Erenshor_Data')">C:\Program Files (x86)\Steam\steamapps\common\Erenshor Playtest</ErenshorDir>
+    <ErenshorDir Condition="'$(ErenshorDir)' == '' AND Exists('C:\Program Files (x86)\Steam\steamapps\common\Erenshor\Erenshor_Data')">C:\Program Files (x86)\Steam\steamapps\common\Erenshor</ErenshorDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Memory" Version="4.5.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- BepInEx 5.4.x -->
+    <Reference Include="BepInEx">
+      <HintPath>$(ErenshorDir)\BepInEx\core\BepInEx.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>$(ErenshorDir)\BepInEx\core\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <!-- Game assemblies -->
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(ErenshorDir)\Erenshor_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <!-- Unity Engine -->
+    <Reference Include="UnityEngine">
+      <HintPath>$(ErenshorDir)\Erenshor_Data\Managed\UnityEngine.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(ErenshorDir)\Erenshor_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>$(ErenshorDir)\Erenshor_Data\Managed\UnityEngine.UI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UIModule">
+      <HintPath>$(ErenshorDir)\Erenshor_Data\Managed\UnityEngine.UIModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>$(ErenshorDir)\Erenshor_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>$(ErenshorDir)\Erenshor_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>$(ErenshorDir)\Erenshor_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>$(ErenshorDir)\Erenshor_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>$(ErenshorDir)\Erenshor_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <!-- Auto-deploy to BepInEx/plugins/ErenshorDoom/ on build -->
+  <Target Name="DeployPlugin" AfterTargets="Build" Condition="'$(ErenshorDir)' != ''">
+    <PropertyGroup>
+      <PluginDir>$(ErenshorDir)\BepInEx\plugins\ErenshorDoom</PluginDir>
+    </PropertyGroup>
+    <MakeDir Directories="$(PluginDir)" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(PluginDir)" />
+    <!-- Copy System.Memory if needed -->
+    <Copy SourceFiles="$(TargetDir)System.Memory.dll" DestinationFolder="$(PluginDir)" Condition="Exists('$(TargetDir)System.Memory.dll')" />
+    <Copy SourceFiles="$(TargetDir)System.Buffers.dll" DestinationFolder="$(PluginDir)" Condition="Exists('$(TargetDir)System.Buffers.dll')" />
+    <Copy SourceFiles="$(TargetDir)System.Runtime.CompilerServices.Unsafe.dll" DestinationFolder="$(PluginDir)" Condition="Exists('$(TargetDir)System.Runtime.CompilerServices.Unsafe.dll')" />
+  </Target>
+</Project>
